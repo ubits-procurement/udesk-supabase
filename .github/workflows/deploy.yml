@@ -1,0 +1,34 @@
+name: Deploy Supabase Migrations
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to deploy
+        type: environment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Instalar Supabase CLI
+        run: |
+          npm install -g supabase
+
+      - name: Configurar variables de entorno
+        id: env
+        run: |
+          echo "PROJECT_REF=${{ secrets.SUPABASE_PROJECT_REF }}" >> $GITHUB_ENV
+
+      - name: Autenticarse en Supabase CLI
+        run: |
+          supabase login --access-token "${{ secrets.SUPABASE_ACCESS_TOKEN }}"
+
+      - name: Aplicar migraciones al proyecto Supabase
+        run: |
+          supabase db push --project-ref $PROJECT_REF
