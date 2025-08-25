@@ -23,7 +23,7 @@ jobs:
 
       - name: Autenticarse en Supabase CLI
         run: |
-          npx supabase login --access-token "${{ secrets.SUPABASE_ACCESS_TOKEN }}"
+          npx supabase login --token "${{ secrets.SUPABASE_ACCESS_TOKEN }}"
 
       - name: Aplicar migraciones al proyecto Supabase
         run: |
