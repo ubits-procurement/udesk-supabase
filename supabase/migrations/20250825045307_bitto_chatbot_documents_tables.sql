@@ -10,7 +10,7 @@ create table bitto_ai_documents (
 );
 
 -- Create a function to search for documents
-create function match_documents (
+create function bitto_ai_match_documents (
   query_embedding vector(1536),
   match_count int default null,
   filter jsonb DEFAULT '{}'
