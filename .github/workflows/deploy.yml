@@ -16,10 +16,6 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v3
 
-      - name: Instalar Supabase CLI
-        run: |
-          npx install supabase
-
       - name: Configurar variables de entorno
         id: env
         run: |
