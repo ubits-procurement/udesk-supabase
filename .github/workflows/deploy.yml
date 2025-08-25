@@ -18,7 +18,7 @@ jobs:
 
       - name: Instalar Supabase CLI
         run: |
-          npm install -g supabase
+          npx install supabase
 
       - name: Configurar variables de entorno
         id: env
@@ -27,8 +27,8 @@ jobs:
 
       - name: Autenticarse en Supabase CLI
         run: |
-          supabase login --access-token "${{ secrets.SUPABASE_ACCESS_TOKEN }}"
+          npx supabase login --access-token "${{ secrets.SUPABASE_ACCESS_TOKEN }}"
 
       - name: Aplicar migraciones al proyecto Supabase
         run: |
-          supabase db push --project-ref $PROJECT_REF
+          npx supabase db push --project-ref $PROJECT_REF
