@@ -16,15 +16,14 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v3
 
-      - name: Configurar variables de entorno
-        id: env
-        run: |
-          echo "PROJECT_REF=${{ secrets.SUPABASE_PROJECT_REF }}" >> $GITHUB_ENV
-
       - name: Autenticarse en Supabase CLI
         run: |
           npx supabase login --token "${{ secrets.SUPABASE_ACCESS_TOKEN }}"
 
+      - name: Link al proyecto Supabase
+        run: |
+          npx supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+
       - name: Aplicar migraciones al proyecto Supabase
         run: |
-          npx supabase db push --project-ref $PROJECT_REF
+          npx supabase db push --linked
