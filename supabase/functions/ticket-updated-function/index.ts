@@ -1,6 +1,6 @@
 // Setup type definitions for built-in Supabase Runtime APIs
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { onTicketAssignedUseCase } from "../_shared/email/application/use-cases/on-ticket-assigned.use-case.ts";
+import { onTicketAssignedUseCase } from "../_shared/email/index.ts";
 
 console.info('Ticket Updated Function started');
 
@@ -19,7 +19,7 @@ Deno.serve(async (req) => {
     
     return new Response(JSON.stringify({ message: 'No action needed' }), {
       headers: { 'Content-Type': 'application/json' }
-    });
+    }); 
     
   } catch (error) {
     console.error('Error in ticket-updated-function:', error);

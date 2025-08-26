@@ -1,17 +1,16 @@
 import { UserRepository } from "../../../user/domain/repositories/user-repository.ts";
-import { SupabaseUserRepository } from "../../../user/infrastructure/repositories/supabase-user.repository.ts";
-import { emailService, EmailService } from "../../email.service.ts";
+import { EmailProvider } from "../../domain/email-provider.ts";
 
 export class OnTicketAssignedUseCase {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly emailService: EmailService
+    private readonly emailProvider: EmailProvider,
   ) {}
 
   async execute(userId: string, ticketId: string) {
     const user = await this.userRepository.getUserById(userId);
 
-    await this.emailService.sendEmail({
+    await this.emailProvider.sendEmail({
       to: user.email,
       subject: "Asignación de Ticket",
       html: this.getTicketAssignmentHtml(
@@ -52,8 +51,3 @@ export class OnTicketAssignedUseCase {
   `;
   }
 }
-
-export const onTicketAssignedUseCase = new OnTicketAssignedUseCase(
-  new SupabaseUserRepository(),
-  emailService
-);
