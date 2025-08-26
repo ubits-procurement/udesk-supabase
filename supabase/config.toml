@@ -1,0 +1,2 @@
+[functions.ticket-updated-function]
+verify_jwt = false
