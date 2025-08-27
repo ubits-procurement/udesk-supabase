@@ -1,6 +1,6 @@
 // Setup type definitions for built-in Supabase Runtime APIs
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { onTicketAssignedUseCase } from "../_shared/email/index.ts";
+import { onTicketAssignedUseCase, onTicketStatusChangeUseCase } from "../_shared/email/index.ts";
 
 console.info('Ticket Updated Function started');
 
@@ -12,11 +12,33 @@ Deno.serve(async (req) => {
     if (updatedRecord?.assigned_to !== oldRecord?.assigned_to) {
       await onTicketAssignedUseCase.execute(updatedRecord.assigned_to, updatedRecord.id);
 
-      return new Response(JSON.stringify({ message: 'Email notification sent' }), {
+      const successMessage = 'Email [Ticket Assigned] notification sent';
+
+      console.info(successMessage);
+
+      return new Response(JSON.stringify({ message: successMessage }), {
         headers: { 'Content-Type': 'application/json' }
       });
     }
-    
+
+    if(updatedRecord?.status !== oldRecord?.status) {
+      await onTicketStatusChangeUseCase.execute({
+        createdById: updatedRecord.created_by,
+        oldStatus: oldRecord.status,
+        newStatus: updatedRecord.status,
+        id: updatedRecord.id,
+        title: updatedRecord.title,
+      });
+
+      const successMessage = 'Email [Ticket Status Changed] notification sent';
+
+      console.info(successMessage);
+
+      return new Response(JSON.stringify({ message: successMessage }), {
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
     return new Response(JSON.stringify({ message: 'No action needed' }), {
       headers: { 'Content-Type': 'application/json' }
     }); 
