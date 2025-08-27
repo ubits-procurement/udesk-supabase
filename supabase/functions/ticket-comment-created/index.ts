@@ -1,5 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { onTicketCommentCreatedUseCase } from "../_shared/email";
+import { onTicketCommentCreatedUseCase } from "../_shared/email/index.ts";
 
 Deno.serve(async (req) => {
   try {
