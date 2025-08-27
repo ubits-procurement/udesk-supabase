@@ -1,0 +1,1 @@
+CREATE OR REPLACE TRIGGER "Ticket Comment Created Webhook" AFTER INSERT ON "public"."ticket_comments" FOR EACH ROW EXECUTE FUNCTION "supabase_functions"."http_request"('https://aobhmkfncgyeehdrffce.supabase.co/functions/v1/ticket-comment-created', 'POST', '{"Content-type":"application/json"}', '{}', '5000');

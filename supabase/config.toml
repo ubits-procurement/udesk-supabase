@@ -1,2 +1,7 @@
 [functions.ticket-updated-function]
 verify_jwt = false
+
+
+[functions.ticket-comment-created]
+enabled = true
+verify_jwt = false

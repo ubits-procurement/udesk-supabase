@@ -10,7 +10,7 @@ Deno.serve(async (req) => {
     
     // Check if the ticket was reassigned
     if (updatedRecord?.assigned_to !== oldRecord?.assigned_to) {
-      onTicketAssignedUseCase.execute(updatedRecord.assigned_to, updatedRecord.id);
+      await onTicketAssignedUseCase.execute(updatedRecord.assigned_to, updatedRecord.id);
 
       return new Response(JSON.stringify({ message: 'Email notification sent' }), {
         headers: { 'Content-Type': 'application/json' }
