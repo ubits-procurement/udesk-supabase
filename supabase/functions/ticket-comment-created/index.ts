@@ -6,7 +6,7 @@ Deno.serve(async (req) => {
     const { record } = await req.json();
 
     await onTicketCommentCreatedUseCase.execute(
-      record.id,
+      record.ticket_id,
       record.content,
       record.created_by
     );
