@@ -32,6 +32,11 @@ export class OnTicketCommentCreatedUseCase {
       ticketCreatorId
     );
 
+    // Evitar que se envíe el correo si el creador del ticket es el mismo que el que creó el comentario
+    if(userCommentCreator.id === userTicketCreator.id){
+      return;
+    }
+
     await this.emailProvider.sendEmail({
       to: userTicketCreator.email,
       subject: "Nuevo comentario",
