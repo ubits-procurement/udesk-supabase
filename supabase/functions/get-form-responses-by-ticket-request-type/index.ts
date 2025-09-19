@@ -32,7 +32,7 @@ Deno.serve(async (req) => {
         supabaseClient
           .from("tickets")
           .select("id")
-          .in("request_type", requestTypesParam)
+          .in("request_type", requestTypesParam.split(","))
       );
 
     if (error) {
