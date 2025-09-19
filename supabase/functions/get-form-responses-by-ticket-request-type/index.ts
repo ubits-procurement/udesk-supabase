@@ -35,14 +35,21 @@ Deno.serve(async (req) => {
           .in("request_type", requestTypesParam)
       );
 
-
-
     if (error) {
       console.error('Error fetching form responses:', error);
       return new Response(
         JSON.stringify({ error: 'Error fetching form responses', details: error.message }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
+    }
+
+    console.log(`Fetched ${data?.length || 0} form responses for request types: ${requestTypesParam}`);
+
+    if (!data || data.length === 0) {
+      return new Response(JSON.stringify({ form_responses: [] }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     return new Response(JSON.stringify({ form_responses: data }), {
