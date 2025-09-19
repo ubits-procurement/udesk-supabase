@@ -5,3 +5,7 @@ verify_jwt = false
 [functions.ticket-comment-created]
 enabled = true
 verify_jwt = false
+
+[functions.get-form-responses-by-ticket-request-type]
+enabled = true
+verify_jwt = false
