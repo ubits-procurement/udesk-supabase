@@ -24,10 +24,17 @@ Deno.serve(async (req) => {
       });
     }
 
-    const {data, error} = await supabaseClient
-        .from('ticket_form_responses')
-        .select('*')
-        .where(`ticket_id IN (SELECT id FROM tickets WHERE request_type IN (${requestTypesParam}))`);
+    const { data, error } = await supabaseClient
+      .from("ticket_form_responses")
+      .select("*")
+      .in(
+        "ticket_id",
+        supabaseClient
+          .from("tickets")
+          .select("id")
+          .in("request_type", requestTypesParam)
+      );
+
 
 
     if (error) {
